@@ -1,63 +1,88 @@
-# egg-egg-cache-9
+# egg-cache-9
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![Test coverage][codecov-image]][codecov-url]
-[![David deps][david-image]][david-url]
-[![Known Vulnerabilities][snyk-image]][snyk-url]
 [![npm download][download-image]][download-url]
 
-[npm-image]: https://img.shields.io/npm/v/egg-egg-cache-9.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/egg-egg-cache-9
-[travis-image]: https://img.shields.io/travis/eggjs/egg-egg-cache-9.svg?style=flat-square
-[travis-url]: https://travis-ci.org/eggjs/egg-egg-cache-9
-[codecov-image]: https://img.shields.io/codecov/c/github/eggjs/egg-egg-cache-9.svg?style=flat-square
-[codecov-url]: https://codecov.io/github/eggjs/egg-egg-cache-9?branch=master
-[david-image]: https://img.shields.io/david/eggjs/egg-egg-cache-9.svg?style=flat-square
-[david-url]: https://david-dm.org/eggjs/egg-egg-cache-9
-[snyk-image]: https://snyk.io/test/npm/egg-egg-cache-9/badge.svg?style=flat-square
-[snyk-url]: https://snyk.io/test/npm/egg-egg-cache-9
-[download-image]: https://img.shields.io/npm/dm/egg-egg-cache-9.svg?style=flat-square
-[download-url]: https://npmjs.org/package/egg-egg-cache-9
+[npm-image]: https://img.shields.io/npm/v/egg-cache-9.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/egg-cache-9
+[download-image]: https://img.shields.io/npm/dm/egg-cache-9.svg?style=flat-square
+[download-url]: https://npmjs.org/package/egg-cache-9
 
-<!--
-Description here.
--->
+该插件基于[node-cache-9](https://github.com/985ch/node-cache-9)缓存包实现了一个简单易用的缓存功能，同时支持将数据缓存到内存和将数据缓存到redis两种方式，也支持批量存取
 
-## 依赖说明
+## 安装
 
-### 依赖的 egg 版本
+```sh
+npm i egg-cache-9
+```
 
-egg-egg-cache-9 版本 | egg 1.x
---- | ---
-1.x | 😁
-0.x | ❌
-
-### 依赖的插件
-<!--
-
-如果有依赖其它插件，请在这里特别说明。如
-
-- security
-- multipart
-
--->
-
-## 开启插件
+## 使用方式
 
 ```js
 // config/plugin.js
-exports.eggCache9 = {
+exports.cache9 = {
   enable: true,
-  package: 'egg-egg-cache-9',
+  package: 'egg-cache-9',
 };
 ```
+```js
+// {app_root}/config/config.default.js
+exports.cache9 = {
+  client: {
+    class: 'memory',
+    ttl: 300,
+  }
+};
 
-## 使用场景
 
-- Why and What: 描述为什么会有这个插件，它主要在完成一件什么事情。
-尽可能描述详细。
-- How: 描述这个插件是怎样使用的，具体的示例代码，甚至提供一个完整的示例，并给出链接。
+// {app_root}/app/****.js
+const cache = app.cache9;
+
+// 从缓存或者数据源获取数据
+let data = await cache.get('key', async ()=>{ /* 在这里从数据源获取你的数据并返回 */ });
+cache.renew('key'); // 更新缓存到期时间
+await cache.clear('key'); //清除缓存数据
+
+// 从缓存或者数据源获取一组数据
+let {list, json} = await cache.getM('key', ids, obj=>obj.id, async ()=>{ /* 在这里从数据源获取你的数据并返回 */ });
+cache.renewM('key', ids); // 更新缓存到期时间
+await cache.clearM('key', ids); //清除缓存数据
+await cache.clearM('key'); //清除缓存数据
+```
+```js
+// {app_root}/config/config.default.js
+exports.cache9 = {
+  default: {
+    ttl: 300,
+  }
+  clients: {
+    cacheA: {
+      class: 'memory',
+    },
+    cacheB: {
+      class: 'redis',
+      rds: { host: '127.0.0.1' }
+    }
+  }
+};
+
+
+// {app_root}/app/****.js
+const cacheA = app.cache9.get('cacheA');
+const cacheB = app.cache9.get('cacheB');
+
+// 从缓存或者数据源获取数据
+let data = await cacheA.get('key', async ()=>{ /* 在这里从数据源获取你的数据并返回 */ });
+cacheA.renew('key'); // 更新缓存到期时间
+await cacheA.clear('key'); //清除缓存数据
+
+// 从缓存或者数据源获取一组数据
+let {list, json} = await cacheB.getM('key', ids, obj=>obj.id, async ()=>{ /* 在这里从数据源获取你的数据并返回 */ });
+cacheB.renewM('key', ids); // 更新缓存到期时间
+await cacheB.clearM('key', ids); //清除缓存数据
+await cacheB.clearM('key'); //清除缓存数据
+```
+更多用法参见[node-cache-9](https://github.com/985ch/node-cache-9#cache-driver-class)
 
 ## 详细配置
 
@@ -65,11 +90,10 @@ exports.eggCache9 = {
 
 ## 单元测试
 
-<!-- 描述如何在单元测试中使用此插件，例如 schedule 如何触发。无则省略。-->
-
-## 提问交流
-
-请到 [egg issues](https://github.com/eggjs/egg/issues) 异步交流。
+请先在本地启动一个redis服务器
+```sh
+npm run test
+```
 
 ## License
 

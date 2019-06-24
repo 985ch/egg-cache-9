@@ -1,16 +1,19 @@
 {
-  "name": "egg-egg-cache-9",
-  "version": "0.0.1",
-  "description": "a egg cache plugin",
+  "name": "egg-cache-9",
+  "version": "1.0.0",
+  "description": "An easy-to-use egg cache plugin based on node-cache-9",
   "eggPlugin": {
-    "name": "eggCache9"
+    "name": "cache9"
   },
   "keywords": [
     "egg",
     "eggPlugin",
-    "egg-plugin"
+    "egg-plugin",
+    "cache",
+    "caching"
   ],
   "dependencies": {
+    "node-cache-9": "^1.1.3",
     "redis": "^2.8.0"
   },
   "optionalDependencies": {
@@ -39,22 +42,20 @@
     "autod": "autod"
   },
   "files": [
-    "app",
     "config",
-    "app.js",
-    "lib"
+    "app.js"
   ],
   "ci": {
     "version": "8, 10"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eggjs/egg-egg-cache-9.git"
+    "url": "git+https://github.com/eggjs/egg-cache-9.git"
   },
   "bugs": {
     "url": "https://github.com/eggjs/egg/issues"
   },
-  "homepage": "https://github.com/eggjs/egg-egg-cache-9#readme",
+  "homepage": "https://github.com/eggjs/egg-cache-9#readme",
   "author": "985ch",
   "license": "MIT"
 }
