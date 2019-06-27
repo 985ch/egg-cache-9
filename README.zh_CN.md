@@ -1,8 +1,10 @@
 # egg-cache-9
 
+[![node version][node-image]]
 [![NPM version][npm-image]][npm-url]
 [![npm download][download-image]][download-url]
 
+[node-image]: https://img.shields.io/badge/node-%3E%3D8-blue.svg
 [npm-image]: https://img.shields.io/npm/v/egg-cache-9.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-cache-9
 [download-image]: https://img.shields.io/npm/dm/egg-cache-9.svg?style=flat-square
@@ -54,7 +56,7 @@ await cache.clearM('key'); //清除缓存数据
 exports.cache9 = {
   default: {
     ttl: 300,
-  }
+  },
   clients: {
     cacheA: {
       class: 'memory',
@@ -83,6 +85,31 @@ await cacheB.clearM('key', ids); //清除缓存数据
 await cacheB.clearM('key'); //清除缓存数据
 ```
 更多用法参见[node-cache-9](https://github.com/985ch/node-cache-9#cache-driver-class)
+
+
+## 与egg-redis同时使用
+在同时使用[egg-redis](https://github.com/eggjs/egg-redis)插件时，可以在配置中直接指定对应的redis客户端
+```js
+exports.cache9 = {
+  default: {
+    ttl: 300,
+  },
+  clients: {
+    cacheA: { // 内存缓存需要同时指定pubRedis和subRedis
+      class: 'memory',
+      pubRedis: 'cachePub', // app.redis.get('cachePub')
+      subRedis: 'cacheSub', // app.redis.get('cacheSub')
+    },
+    cacheB: { // redis缓存可以设置redis或什么都不设置
+      class: 'redis',
+      redis: 'cache', // app.redis.get('cache')
+    },
+    cacheC: { // 在没有getRedis，redis和rds的情况下，使用app.redis
+      class: 'redis',
+    }
+  }
+};
+```
 
 ## 详细配置
 

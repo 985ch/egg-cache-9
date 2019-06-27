@@ -1,9 +1,10 @@
 {
   "name": "egg-cache-9",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "An easy-to-use egg cache plugin based on node-cache-9",
   "eggPlugin": {
-    "name": "cache9"
+    "name": "cache9",
+    "optionalDependencies": [ "redis" ]
   },
   "keywords": [
     "egg",
@@ -13,11 +14,10 @@
     "caching"
   ],
   "dependencies": {
-    "node-cache-9": "^1.1.3",
-    "redis": "^2.8.0"
+    "node-cache-9": "^1.1.3"
   },
-  "optionalDependencies": {
-    "egg-redis": "^2.4.0"
+  "optionalDependencies":{
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",

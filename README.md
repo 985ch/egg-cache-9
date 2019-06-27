@@ -1,8 +1,10 @@
 # egg-cache-9
 
+[![node version][node-image]]
 [![NPM version][npm-image]][npm-url]
 [![npm download][download-image]][download-url]
 
+[node-image]: https://img.shields.io/badge/node-%3E%3D8-blue.svg
 [npm-image]: https://img.shields.io/npm/v/egg-cache-9.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-cache-9
 [download-image]: https://img.shields.io/npm/dm/egg-cache-9.svg?style=flat-square
@@ -10,6 +12,7 @@
 
 The plugin implements an easy-to-use caching function based on [node-cache-9](https://github.com/985ch/node-cache-9), which supports caching data into memory and caching data to redis.
 
+### [中文说明](./README.zh_CN.md)
 ## Install
 
 ```bash
@@ -54,7 +57,7 @@ await cache.clearM('key'); //clear cache
 exports.cache9 = {
   default: {
     ttl: 300,
-  }
+  },
   clients: {
     cacheA: {
       class: 'memory',
@@ -84,6 +87,31 @@ await cacheB.clearM('key'); //clear cache
 ```
 see [node-cache-9](https://github.com/985ch/node-cache-9#cache-driver-class) for more detail.
 
+
+## Use with egg-redis
+When using the [egg-redis] (https://github.com/eggjs/egg-redis) plugin, you can specify the redis client directly in the configuration.
+```js
+exports.cache9 = {
+  default: {
+    ttl: 300,
+  },
+  clients: {
+    cacheA: { // The memory cache needs to set both pubRedis and subRedis as string
+      class: 'memory',
+      pubRedis: 'cachePub', // app.redis.get('cachePub')
+      subRedis: 'cacheSub', // app.redis.get('cacheSub')
+    },
+    cacheB: { // redis cache can set redis as string
+      class: 'redis',
+      redis: 'cache', // app.redis.get('cache')
+    },
+    cacheC: { // If you have not configured getRedis, redis and rds, use app.redis
+      class: 'redis',
+    }
+  }
+};
+```
+
 ## Configuration
 
 see [config/config.default.js](config/config.default.js) for more detail.
@@ -97,4 +125,5 @@ npm run test
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE)<br />
+This README was translate by [google](https://translate.google.cn)
