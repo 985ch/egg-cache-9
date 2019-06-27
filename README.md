@@ -1,6 +1,6 @@
 # egg-cache-9
 
-[![node version][node-image]]
+![node version][node-image]
 [![NPM version][npm-image]][npm-url]
 [![npm download][download-image]][download-url]
 
@@ -89,7 +89,7 @@ see [node-cache-9](https://github.com/985ch/node-cache-9#cache-driver-class) for
 
 
 ## Use with egg-redis
-When using the [egg-redis] (https://github.com/eggjs/egg-redis) plugin, you can specify the redis client directly in the configuration.
+When using the [egg-redis](https://github.com/eggjs/egg-redis) plugin, you can specify the redis client directly in the configuration.
 ```js
 exports.cache9 = {
   default: {
