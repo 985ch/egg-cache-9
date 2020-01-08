@@ -1,6 +1,6 @@
 # egg-cache-9
 
-[![node version][node-image]]
+![node version][node-image]
 [![NPM version][npm-image]][npm-url]
 [![npm download][download-image]][download-url]
 
