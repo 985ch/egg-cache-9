@@ -4,7 +4,9 @@
   "description": "An easy-to-use egg cache plugin based on node-cache-9",
   "eggPlugin": {
     "name": "cache9",
-    "optionalDependencies": [ "redis" ]
+    "optionalDependencies": [
+      "redis"
+    ]
   },
   "keywords": [
     "egg",
@@ -16,7 +18,7 @@
   "dependencies": {
     "node-cache-9": "^1.1.6"
   },
-  "optionalDependencies":{
+  "optionalDependencies": {
     "redis": "^2.8.0"
   },
   "devDependencies": {
