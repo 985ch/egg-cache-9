@@ -1,6 +1,6 @@
 {
   "name": "egg-cache-9",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An easy-to-use egg cache plugin based on node-cache-9",
   "eggPlugin": {
     "name": "cache9",
